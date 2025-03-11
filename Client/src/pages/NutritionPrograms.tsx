@@ -1,9 +1,20 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Clock, Calendar } from "lucide-react";
+import config from "@/config";
+
+interface NutritionProgram {
+    _id: string;
+    title: string;
+    reviews: string;
+    description: string;
+    programDuration: string;
+    consultations: string;
+    price: string;
+}
 
 const NutritionProgramCard = ({
     title,
@@ -12,14 +23,7 @@ const NutritionProgramCard = ({
     programDuration,
     consultations,
     price,
-}: {
-    title: string;
-    reviews: string;
-    description: string;
-    programDuration: string;
-    consultations: string;
-    price: string;
-}) => {
+}: NutritionProgram) => {
     return (
         <Card>
             <CardContent className="p-6">
@@ -51,49 +55,55 @@ const NutritionProgramCard = ({
 };
 
 const Programs = () => {
-    const [programs, setPrograms] = useState<any[]>([]);
-    const [search, setSearch] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [programs, setPrograms] = useState<NutritionProgram[]>([]);
+    const [search, setSearch] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState<number>(1);
+    const [hasMore, setHasMore] = useState<boolean>(true);
 
     useEffect(() => {
+        let isMounted = true; 
+
         const fetchPrograms = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get('http://localhost:5000/api/programs/nutrition-programs', {
-                    params: { page, limit: 10, search }
-                });
-                if (response.data.length < 10) {
-                    setHasMore(false);
+                const response = await axios.get<NutritionProgram[]>(
+                    `${config.apiBaseUrl}/programs/nutrition-programs`,
+                    { params: { page, limit: 10, search } }
+                );
+
+                if (isMounted) {
+                    setPrograms(prevPrograms => (page === 1 ? response.data : [...prevPrograms, ...response.data]));
+                    setHasMore(response.data.length === 10);
                 }
-                setPrograms(prevPrograms => [...prevPrograms, ...response.data]);
             } catch (err) {
-                setError('Failed to fetch programs');
+                if (isMounted) setError("Failed to fetch programs");
             } finally {
-                setLoading(false);
+                if (isMounted) setLoading(false);
             }
         };
 
         fetchPrograms();
+        return () => {
+            isMounted = false;
+        };
     }, [page, search]);
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
-        setPrograms([]);
         setPage(1);
+        setPrograms([]); 
         setHasMore(true);
     };
 
-    const loadMore = () => {
-        setPage(prevPage => prevPage + 1);
-    };
+    const loadMore = () => setPage(prevPage => prevPage + 1);
 
     return (
         <div className="min-h-screen bg-background">
             <Navbar />
             <div className="container px-4 mx-auto pt-24 pb-12">
-                <h1 className="text-3xl font-bold mb-8">Nutrition Programs</h1>
+                <h1 className="text-4xl font-bold mb-8">Nutrition Programs</h1>
                 <input
                     type="text"
                     placeholder="Search programs by title"
@@ -102,27 +112,19 @@ const Programs = () => {
                     className="mb-8 p-2 border rounded-md w-full"
                 />
                 {loading && page === 1 ? (
-                    <div>Loading...</div>
+                    <div className="text-center text-gray-600">Loading...</div>
                 ) : error ? (
-                    <div>{error}</div>
+                    <div className="text-center text-red-500">{error}</div>
                 ) : (
                     <>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {programs.map((program: any) => (
-                                <NutritionProgramCard
-                                    key={program._id}
-                                    title={program.title}
-                                    reviews={program.reviews}
-                                    description={program.description}
-                                    programDuration={program.programDuration}
-                                    consultations={program.consultations}
-                                    price={program.price}
-                                />
+                            {programs.map(program => (
+                                <NutritionProgramCard key={program._id} {...program} />
                             ))}
                         </div>
                         {hasMore && (
                             <div className="flex justify-center mt-8">
-                                <Button onClick={loadMore} className="bg-customGreen text-white hover:bg-green-600">
+                                <Button variant="outline" onClick={loadMore} className="bg-customGreen text-white hover:bg-green-600">
                                     View More
                                 </Button>
                             </div>

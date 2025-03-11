@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaPhone, FaSignOutAlt, FaCalendarAlt } from 'react-icons/fa';
+import config from '@/config';
 
 const UserProfile = () => {
   const [user, setUser] = useState<any>(null);
@@ -20,12 +21,12 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/profile', {
+        const response = await axios.get(`${config.apiBaseUrl}/auth/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('API response:', response.data); 
+
         setUser(response.data);
       } catch (err) {
         console.error('Error fetching user data:', err); 
@@ -44,12 +45,11 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:5000/api/appointments/user-appointments', {
+        const response = await axios.get(`${config.apiBaseUrl}/appointments/user-appointments`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Appointments response:', response.data); 
         setAppointments(response.data);
       } catch (err) {
         console.error('Error fetching appointments:', err); 

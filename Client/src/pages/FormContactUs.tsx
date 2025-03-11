@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ContactInfoCard from "@/components/InfoCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import config from '@/config';
 
 const formSchema = z.object({
   name: z
@@ -37,7 +38,7 @@ export function ContactForm() {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      await axios.post('http://localhost:5000/api/contact/submit', data);
+      await axios.post(`${config.apiBaseUrl}/contact/submit`, data);
       alert("Form submitted successfully! , We shall contact you shortly");
       navigate("/"); 
     } catch (error) {

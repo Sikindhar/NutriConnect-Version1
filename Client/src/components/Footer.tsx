@@ -13,8 +13,8 @@ const Footer = () => {
 
             <div className="flex flex-col p-10">
                 <h1 className="text-lg font-semibold py-1">Quick Links</h1>
-                <a href="" className="text-sm text-gray-600 hover:text-customGreen py-1">Find Nutritionists</a>
-                <a href="" className="text-sm text-gray-600 hover:text-customGreen py-1">Programs</a>
+                <a href="/browseNutritionists" className="text-sm text-gray-600 hover:text-customGreen py-1">Find Nutritionists</a>
+                <a href="/nutritionPrograms" className="text-sm text-gray-600 hover:text-customGreen py-1">Programs</a>
                 <a href="/about" className="text-sm text-gray-600 hover:text-customGreen py-1">About us</a>
             </div>
 

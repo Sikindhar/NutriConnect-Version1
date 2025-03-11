@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from 'react-toastify';
+import config from '@/config';
 
 const AppointmentForm = ({ doctor, user, onClose }: { doctor: any; user: any; onClose: () => void }) => {
     const [subject, setSubject] = useState('');
@@ -15,7 +16,7 @@ const AppointmentForm = ({ doctor, user, onClose }: { doctor: any; user: any; on
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/appointments/schedule-appointment', {
+            await axios.post(`${config.apiBaseUrl}/appointments/schedule-appointment`, {
                 name: user.name,
                 email: user.email,
                 subject,

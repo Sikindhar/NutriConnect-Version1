@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import axios from 'axios';
+import config from '@/config';
 
 interface SignInFormData {
   email: string;
@@ -18,18 +20,13 @@ export function SignInForm() {
 
   const onSubmit = async (data: SignInFormData) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      const response = await axios.post(`${config.apiBaseUrl}/auth/login`, data);
 
-      const result = await response.json();
-      if (response.ok) {
-        login(result.token);
+      if (response.status === 200) {
+        login(response.data.token);
         navigate('/');
       } else {
-        alert(result.message);
+        alert(response.data.message);
       }
     } catch (error) {
       console.error('Error during login:', error);

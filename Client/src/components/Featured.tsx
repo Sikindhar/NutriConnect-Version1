@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import DoctorCard from "@/components/DoctorCard";
 import AppointmentForm from "@/components/AppointmentForm";
+import config from '@/config';
 
 const Doctors = () => {
     const [doctors, setDoctors] = useState<any[]>([]);
@@ -18,10 +19,8 @@ const Doctors = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/users/profile', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}` 
-                    }
+                const response = await axios.get(`${config.apiBaseUrl}/users/profile`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 setUser(response.data);
             } catch (err) {
@@ -34,14 +33,22 @@ const Doctors = () => {
 
     useEffect(() => {
         const fetchDoctors = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get('http://localhost:5000/api/doctors/doctors-list', {
+                const response = await axios.get(`${config.apiBaseUrl}/doctors/doctors-list`, {
                     params: { page, limit: 10, search }
                 });
-                if (response.data.length < 10) {
-                    setHasMore(false);
-                }
-                setDoctors(prevDoctors => [...prevDoctors, ...response.data]);
+
+                const newDoctors = response.data;
+
+                setDoctors(prevDoctors => {
+                    const uniqueDoctors = [...prevDoctors, ...newDoctors].filter(
+                        (doctor, index, self) => index === self.findIndex(d => d._id === doctor._id)
+                    );
+                    return uniqueDoctors;
+                });
+
+                if (newDoctors.length < 10) setHasMore(false);
             } catch (err) {
                 setError('Failed to fetch doctors');
             } finally {
@@ -75,7 +82,7 @@ const Doctors = () => {
         <div className="min-h-screen bg-background">
             <Navbar />
             <div className="container px-4 mx-auto pt-24 pb-12">
-                <h1 className="text-3xl font-bold mb-8">Connect with our Experts </h1>
+                <h1 className="text-3xl font-bold mb-8">Connect with our Experts</h1>
                 <input
                     type="text"
                     placeholder="Search doctors by name or specialization"
