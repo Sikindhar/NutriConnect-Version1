@@ -4,8 +4,6 @@ import ContactForm from '../Models/ContactForm';
 export const submitContactForm = async (req: Request, res: Response) => {
   const { name, email, subject, message, phone, doctorId, doctorName } = req.body;
 
-  console.log('Received form data:', req.body);
-
   try {
     const newContactForm = new ContactForm({
       name,

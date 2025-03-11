@@ -26,9 +26,7 @@ export const getUserAppointments = async (req: AuthenticatedRequest, res: Respon
       return res.status(401).json({ message: 'Unauthorized' });
     }
     const userEmail = req.user.email; 
-    console.log('User Email:', userEmail); 
     const appointments = await Appointment.find({ email: userEmail }).populate('doctorId', 'name');
-    console.log('Appointments:', appointments); 
     res.status(200).json(appointments);
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error });
