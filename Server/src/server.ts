@@ -20,12 +20,12 @@ mongoose.connect(process.env.MONGO_URI!)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use('/api/programs', nutritionRoutes);
-app.use('/api/doctors',doctorRoutes);
-app.use('/api/appointments', appointmentRoutes);
-app.use('/api/contact', contactFormRoutes);
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use('/programs', nutritionRoutes);
+app.use('/doctors',doctorRoutes);
+app.use('/appointments', appointmentRoutes);
+app.use('/contact', contactFormRoutes);
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
