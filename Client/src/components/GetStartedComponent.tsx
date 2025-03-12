@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
