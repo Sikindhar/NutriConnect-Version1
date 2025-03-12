@@ -99,7 +99,7 @@ Once both the frontend and backend are running, open your browser and navigate t
 
 Contributions are welcome! Feel free to fork the repository and submit pull requests.
 
-📧 Contact
+📧 Contact at sikindharjaladi@gmail.com
 
 For any queries or support, reach out via the Contact Us page on the platform.
 
