@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,11 +12,6 @@ import {
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-
-interface User {
-  name: string;
-  email: string;
-}
 
 function DropdownMenuRadioGroupDemo() {
   const [position, setPosition] = useState("bottom");
@@ -48,7 +43,6 @@ function DropdownMenuRadioGroupDemo() {
 
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
 
   return (
     <div className="flex items-center justify-between px-4 py-2 bg-white shadow-sm fixed top-0 left-0 w-full z-50">
