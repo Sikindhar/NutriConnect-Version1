@@ -16,7 +16,7 @@ const AppointmentForm = ({ doctor, user, onClose }: { doctor: any; user: any; on
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post(`${config.apiBaseUrl}/appointments/schedule-appointment`, {
+            await axios.post(`${config.apiBaseUrl}/api/appointments/schedule-appointment`, {
                 name: user.name,
                 email: user.email,
                 subject,
@@ -66,7 +66,7 @@ const AppointmentForm = ({ doctor, user, onClose }: { doctor: any; user: any; on
                     </div>
                     <div className="flex justify-end">
                         <Button type="button" onClick={onClose} className="mr-2">Cancel</Button>
-                        <Button type="submit" className="bg-customGreen text-white hover:bg-green-600" disabled={loading}>
+                        <Button variant={'outline'} type="submit" className="bg-customGreen text-white hover:bg-green-600" disabled={loading}>
                             {loading ? 'Scheduling...' : 'Schedule'}
                         </Button>
                     </div>
