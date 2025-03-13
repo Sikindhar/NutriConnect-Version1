@@ -38,7 +38,7 @@ const DoctorCard = ({
                         <span>Available Slots: {doctor.availableSlots.join(', ')}</span>
                     </div>
                 </div>
-                <Button onClick={() => onSchedule(doctor)} className="bg-customGreen text-white hover:bg-green-600">
+                <Button variant={"outline"} onClick={() => onSchedule(doctor)} className="bg-customGreen text-white hover:bg-green-600">
                     Schedule
                 </Button>
             </CardContent>
