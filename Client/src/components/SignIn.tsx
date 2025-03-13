@@ -72,7 +72,7 @@ export function SignInForm() {
               <Link to="/sign-up">
                 <Button variant="outline" className="text-customGreen mx-4">New User?</Button>
               </Link>
-              <Button className="bg-customGreen text-white hover:bg-green-600 mx-4" type="submit">
+              <Button variant={'outline'} className="bg-customGreen text-white hover:bg-green-600 mx-4" type="submit">
                 Sign In
               </Button>
             </CardFooter>
