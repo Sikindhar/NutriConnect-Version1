@@ -21,7 +21,7 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await axios.get(`${config.apiBaseUrl}/auth/profile`, {
+        const response = await axios.get(`${config.apiBaseUrl}/api/auth/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -45,7 +45,7 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await axios.get(`${config.apiBaseUrl}/appointments/user-appointments`, {
+        const response = await axios.get(`${config.apiBaseUrl}/api/appointments/user-appointments`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

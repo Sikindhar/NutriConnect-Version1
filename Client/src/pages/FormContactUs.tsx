@@ -38,7 +38,7 @@ export function ContactForm() {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      await axios.post(`${config.apiBaseUrl}/contact/submit`, data);
+      await axios.post(`${config.apiBaseUrl}/api/contact/submit`, data);
       alert("Form submitted successfully! , We shall contact you shortly");
       navigate("/"); 
     } catch (error) {

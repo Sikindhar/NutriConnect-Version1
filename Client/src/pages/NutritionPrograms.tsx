@@ -69,7 +69,7 @@ const Programs = () => {
             setLoading(true);
             try {
                 const response = await axios.get<NutritionProgram[]>(
-                    `${config.apiBaseUrl}/programs/nutrition-programs`,
+                    `${config.apiBaseUrl}/api/programs/nutrition-programs`,
                     { params: { page, limit: 10, search } }
                 );
 
