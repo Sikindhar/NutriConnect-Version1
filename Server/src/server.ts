@@ -23,9 +23,8 @@ mongoose.connect(process.env.MONGO_URI!)
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/programs', nutritionRoutes);
-app.use('/api/doctors',doctorRoutes);
+app.use('/api/doctors', doctorRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/contact', contactFormRoutes);
-
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
