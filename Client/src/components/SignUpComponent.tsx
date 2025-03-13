@@ -20,7 +20,7 @@ export function SignUpForm() {
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      const response = await axios.post(`${config.apiBaseUrl}/auth/register`, data);
+      const response = await axios.post(`${config.apiBaseUrl}/api/auth/register`, data);
 
       if (response.status === 200) {
         alert("Registration Successful! Please log in.");
@@ -75,7 +75,7 @@ export function SignUpForm() {
               <Link to="/sign-in">
                 <Button variant="outline" className="text-customGreen mx-2">Have Account already?</Button>
               </Link>
-              <Button className="bg-customGreen text-white hover:bg-green-600 mx-2" type="submit">
+              <Button variant={"outline"} className="bg-customGreen text-white hover:bg-green-600 mx-2" type="submit">
                 Sign Up
               </Button>
             </CardFooter>
