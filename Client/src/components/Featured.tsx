@@ -19,7 +19,7 @@ const Doctors = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get(`${config.apiBaseUrl}/users/profile`, {
+                const response = await axios.get(`${config.apiBaseUrl}/api/users/profile`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 setUser(response.data);
@@ -35,7 +35,7 @@ const Doctors = () => {
         const fetchDoctors = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${config.apiBaseUrl}/doctors/doctors-list`, {
+                const response = await axios.get(`${config.apiBaseUrl}/api/doctors/doctors-list`, {
                     params: { page, limit: 10, search }
                 });
 

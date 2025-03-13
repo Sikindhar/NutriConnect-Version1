@@ -20,8 +20,7 @@ export function SignInForm() {
 
   const onSubmit = async (data: SignInFormData) => {
     try {
-      const response = await axios.post(`${config.apiBaseUrl}/auth/login`, data);
-
+      const response = await axios.post(`${config.apiBaseUrl}/api/auth/login`, data);
       if (response.status === 200) {
         login(response.data.token);
         navigate('/');
@@ -30,7 +29,7 @@ export function SignInForm() {
       }
     } catch (error) {
       console.error('Error during login:', error);
-      alert('Something went wrong! Try again.');
+      alert('Something went wrong! Try again. Perhaps your credentials are wrong');
     }
   };
 
